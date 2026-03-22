@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}MediCare Hospital{% endblock %}</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+
+    <!-- Logo -->
+    <a href="{{ url_for('main.index') }}" class="nav-brand">
+      <i class="fas fa-heartbeat"></i>
+      <span>MediCare</span>
+    </a>
+
+    <!-- Links -->
+    <ul class="nav-links">
+
+      <li><a href="{{ url_for('main.index') }}">Home</a></li>
+
+      {% if session.get('role') == 'admin' %}
+        <li><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('admin.add_doctor') }}">Add Doctor</a></li>
+        <li><a href="{{ url_for('admin.patients') }}">Patients</a></li>
+        <li><a href="{{ url_for('billing.index') }}">Billing</a></li>
+
+      {% elif session.get('role') == 'doctor' %}
+        <li><a href="{{ url_for('doctor.dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('appointment.list_appointments') }}">Appointments</a></li>
+
+      {% elif session.get('role') == 'patient' %}
+        <li><a href="{{ url_for('patient.dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('appointment.book') }}">Book Appointment</a></li>
+        <li><a href="{{ url_for('billing.index') }}">Billing</a></li>
+
+      {% else %}
+        <li><a href="#services">Services</a></li>
+        <li><a href="#doctors">Doctors</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      {% endif %}
+
+    </ul>
+
+    <!-- Auth -->
+    <div class="nav-actions">
+      {% if session.get('user_name') %}
+        <span>{{ session['user_name'] }}</span>
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('auth.login') }}">Login</a>
+        <a href="{{ url_for('auth.register') }}">Register</a>
+      {% endif %}
+    </div>
+
+  </div>
+</nav>
+
+<!-- FLASH MESSAGE -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div>
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- MAIN CONTENT -->
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 MediCare Hospital Management System</p>
+</footer>
+
+<!-- JS -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block extra_js %}{% endblock %}
+
+</body>
+</html>

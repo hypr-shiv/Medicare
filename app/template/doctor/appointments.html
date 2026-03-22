@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Doctor Appointments{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h2>All Appointments</h2>
+
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Patient Name</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for appt in appointments %}
+            <tr>
+                <td>{{ appt.patient }}</td>
+                <td>{{ appt.date }}</td>
+                <td>{{ appt.status }}</td>
+                <td>
+                    <button class="btn btn-success btn-sm">Approve</button>
+                    <button class="btn btn-danger btn-sm">Reject</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

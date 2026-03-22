@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Doctor Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Doctor Dashboard</h2>
+
+    <div class="card p-3 mt-3 shadow">
+        <h4>Welcome Dr. {{ doctor.name }}</h4>
+        <p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+    </div>
+
+    <div class="mt-4">
+        <h3>Recent Appointments</h3>
+
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+                    <td>{{ appt.patient }}</td>
+                    <td>{{ appt.date }}</td>
+                    <td>{{ appt.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ url_for('doctor.appointments') }}" class="btn btn-primary mt-3">
+        View All Appointments
+    </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Patient Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Patient Dashboard</h2>
+
+    <div class="card p-3 mt-3 shadow">
+        <h4>Welcome {{ patient.name }}</h4>
+        <p><strong>Email:</strong> {{ patient.email }}</p>
+    </div>
+
+    <div class="mt-4">
+        <h3>Your Appointments</h3>
+
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+                    <td>{{ appt.doctor }}</td>
+                    <td>{{ appt.date }}</td>
+                    <td>{{ appt.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ url_for('appointment.book') }}" class="btn btn-primary mt-3">
+        Book New Appointment
+    </a>
+
+</div>
+
+{% endblock %}

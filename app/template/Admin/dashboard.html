@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Admin Dashboard</h2>
+
+    <div class="row mt-4">
+
+        <div class="col-md-4">
+            <div class="card p-3 shadow">
+                <h4>Total Doctors</h4>
+                <p>{{ stats.doctors }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 shadow">
+                <h4>Total Patients</h4>
+                <p>{{ stats.patients }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 shadow">
+                <h4>Total Appointments</h4>
+                <p>{{ stats.appointments }}</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ url_for('admin.add_doctor') }}" class="btn btn-primary">Add Doctor</a>
+        <a href="{{ url_for('admin.patients') }}" class="btn btn-success">View Patients</a>
+    </div>
+
+</div>
+
+{% endblock %}
